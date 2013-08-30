@@ -1,0 +1,56 @@
+<div xmlns:jsp="http://java.sun.com/JSP/Page" class="wrapper"
+     xmlns:c="http://java.sun.com/jsp/jstl/core"
+     xmlns:joda="http://www.joda.org/joda/time/tags"
+     xmlns:spring="http://www.springframework.org/tags"
+     version="2.0">
+    <jsp:directive.page contentType="text/html; charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+<div class="well">
+    Control them
+
+
+    <table class="table table-bordered table1">
+        <tbody>
+        <c:forEach items="${books}" var="book">
+            <tr>
+                <td>
+                    <a href="/${book.user.login}/editBook/${book.title}/1/show">
+                        ${book.title}
+                    </a>
+                </td>
+                <td>
+                    ${book.user.surname}
+                </td>
+                <td>
+                    ${book.rating}
+                </td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+
+
+    <table class="table table-bordered table1">
+    <tbody>
+    <c:forEach items="${users}" var="user">
+    <tr>
+        <td>
+            ${user.surname}
+        </td>
+        <td>
+            ${user.name}
+        </td>
+        <td>
+            ${user.login}
+        </td>
+        <td>
+            <form action="/removeUser/${user.id}" method="post">
+            <input type="submit" value="remove"/>
+            </form>
+        </td>
+    </tr>
+    </c:forEach>
+    </tbody>
+    </table>
+    </div>
+</div>

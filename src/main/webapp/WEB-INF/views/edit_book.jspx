@@ -1,0 +1,120 @@
+<div xmlns:jsp="http://java.sun.com/JSP/Page" class="wrapper"
+     xmlns:c="http://java.sun.com/jsp/jstl/core"
+     xmlns:joda="http://www.joda.org/joda/time/tags"
+     xmlns:spring="http://www.springframework.org/tags"
+     version="2.0">
+    <jsp:directive.page contentType="text/html; charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+
+    <table>
+        <tr>
+            <td>
+                <h2>${book.title} </h2>
+            </td>
+            <td>
+                <h2>${currentChapter.title}</h2>
+            </td>
+        </tr>
+    </table>
+    <c:choose>
+        <!--for Users who can edit -->
+        <c:when test="${person eq 'ownUser'}">
+            <c:choose>
+                <!--edit book-->
+                <c:when test="${userAction eq 'edit'}">
+
+                    <div class="well leftSidePanel">
+                        <a href="/${userLogin}/editBook/${bookTitle}/createNewChapter">Create New Chapter</a>
+                        <table class="table table-bordered leftSideTable">
+                            <c:forEach items="${book.chapters}" var="chapter">
+                                <tr>
+                                    <td>
+                                        <form action="/${userLogin}/editBook/${bookTitle}/${chapter.chapterNumber}"
+                                              method="get">
+                                            <input type="submit" value="${chapter.title}"/>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form action="/${userLogin}/editBook/${bookTitle}/${chapter.chapterNumber}/deleteChapter"
+                                              method="get">
+                                            <input type="submit" value="remove"/>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </table>
+                    </div>
+
+                    <div  class="well content">
+                        <form action="/${userLogin}/editBook/${bookTitle}/${currentChapter.chapterNumber}" method="get">
+                            <input type="submit" value="Edit"/>
+                        </form>
+                        <form action="/${userLogin}/editBook/${bookTitle}/${currentChapter.chapterNumber}/show" method="get">
+                            <input type="submit" value="Show"/>
+                        </form>
+                        <form action="/${userLogin}/editBook/${bookTitle}/${currentChapter.chapterNumber}/save" method="post">
+                            <textarea name="text" class="reader">${currentChapter.text}</textarea>
+                            <br/>
+                            <input type="submit" value="Save Chapter"/>
+                        </form>
+                    </div>
+                </c:when>
+                <!--read book-->
+
+                <c:otherwise>
+                    <div class="well leftSidePanel">
+                        <table  class="table table-bordered leftSideTable">
+                            <c:forEach items="${book.chapters}" var="chapter">
+                                <tr>
+                                    <td>
+                                        <form action="/${userLogin}/editBook/${bookTitle}/${chapter.chapterNumber}/show" method="get">
+                                            <input type="submit" value="${chapter.title}"/>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </table>
+                    </div>
+                    <div  class="well content">
+                        <form action="/${userLogin}/editBook/${bookTitle}/${currentChapter.chapterNumber}" method="get">
+                            <input type="submit" value="Edit"/>
+                        </form>
+                        <form action="/${userLogin}/editBook/${bookTitle}/${currentChapter.chapterNumber}/show" method="get">
+                            <input type="submit" value="Show"/>
+                        </form>
+                        <textarea disabled="disabled" class="reader">${currentChapter.text}</textarea>
+                    </div>
+                </c:otherwise>
+            </c:choose>
+
+        </c:when>
+
+        <!--for user who cant edit-->
+        <c:otherwise>
+        <div class="well leftSidePanel">
+            <table  class="table table-bordered leftSideTable">
+                <c:forEach items="${book.chapters}" var="chapter">
+                    <tr>
+                        <td>
+                            <form action="/${userLogin}/editBook/${bookTitle}/${chapter.chapterNumber}/show" method="get">
+                                <input type="submit" value="${chapter.title}"/>
+                            </form>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </table>
+        </div>
+        <div  class="well content">
+            <textarea disabled="disabled" class="reader">${currentChapter.text}</textarea>
+
+            <c:if test="${person eq 'notOwnUser'}">
+                <spring:message code="add_like" var="addLike"/>
+                <spring:url value="#" var="likeUrl"/>
+                <a href="${likeUrl}">${homeText}</a>
+            </c:if>
+        </div>
+        </c:otherwise>
+
+    </c:choose>
+
+</div>

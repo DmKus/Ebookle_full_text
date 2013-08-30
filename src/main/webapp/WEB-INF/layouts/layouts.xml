@@ -1,0 +1,43 @@
+<?xml  version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+
+    <definition name="default" template="/WEB-INF/views/default.jspx">
+        <put-attribute name="header" value="/WEB-INF/views/common/header.jspx"/>
+        <put-attribute name="footer" value="/WEB-INF/views/common/footer.jspx"/>
+    </definition>
+
+    <definition name="home" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/home.jspx"/>
+    </definition>
+
+    <definition name="registration" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/registration.jspx"/>
+    </definition>
+
+    <definition name="registration_success" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/registration_success.jspx"/>
+    </definition>
+
+    <definition name="admin" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/admin.jspx"/>
+    </definition>
+
+    <definition name="create_new_book" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/create_new_book.jspx"/>
+    </definition>
+
+    <definition name="edit_book" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/edit_book.jspx"/>
+    </definition>
+
+    <definition name="error" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/error.jspx"/>
+    </definition>
+    <definition name="testAnswer" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/common/testAnswer.jspx"/>
+    </definition>
+
+</tiles-definitions>

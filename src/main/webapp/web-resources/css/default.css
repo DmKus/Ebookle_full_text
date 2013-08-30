@@ -1,0 +1,71 @@
+.leftSidePanel{
+    display: block;
+    float: left;
+    width: 16%;
+    height: 100%;
+}
+.leftSideTable{
+    position: relative;
+    width: 100%;
+    max-width: 50px;
+}
+.content{
+    float:left;
+    display: block;
+    width: 80%;
+    height: 90%;
+    margin-left: 10px;
+}
+/*.table1{*/
+    /*float:left;*/
+    /*display: block;*/
+    /*width: 80%;*/
+    /*height: 80%;*/
+/*}*/
+.test{
+    width: 100%;
+    float: left;
+}
+.line50{
+    width: 50px;
+}
+.line80{
+     width: 80px;
+ }
+html, body {
+    height: 100%;
+}
+footer {
+    color: #666;
+    background: #222;
+    padding: 17px 0 18px 0;
+    border-top: 1px solid #000;
+}
+footer a {
+    color: #999;
+}
+footer a:hover {
+    color: #efefef;
+}
+.wrapper {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -63px;
+}
+.push {
+    height: 63px;
+}
+/* not required for sticky footer; just pushes hero down a bit */
+.wrapper > .container {
+    padding-top: 60px;
+}
+.reader{
+    min-height:300px ;
+    min-width: 70%;
+    max-height: 500px;
+    max-width: 980px;
+}
+.register-form{
+    width: 40%;
+}

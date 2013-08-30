@@ -1,0 +1,153 @@
+<div xmlns:jsp="http://java.sun.com/JSP/Page" class="wrapper"
+     xmlns:c="http://java.sun.com/jsp/jstl/core"
+     xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+     xmlns:joda="http://www.joda.org/joda/time/tags"
+     xmlns:spring="http://www.springframework.org/tags"
+     xmlns:sec="http://www.springframework.org/security/tags"
+     version="2.0" xmlns:form="http://www.springframework.org/tags/form">
+    <jsp:directive.page contentType="text/html; charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+
+
+
+    <spring:url value="/" var="homeUrl"/>
+    <c:url value='/j_spring_security_logout' var="securityLogout"/>
+
+
+    <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">
+    <div class="well leftSidePanel" >
+
+
+
+        Hello, ${user.name}
+        <br/>
+            <a href="${user.login}/books">Your books</a>
+        <br/>
+
+        <table class="table table-bordered leftSideTable">
+            <c:forEach items="${user.books}" var="userBook">
+
+                <tr>
+                    <td class="tableCol1">
+                        <a href="${user.login}/showBook/${userBook.id}">
+                            <c:choose>
+                                <c:when test="${fn:length(userBook.title) gt 20}">
+                                    ${fn:substring(userBook.title, 0, 10)}..
+                                </c:when>
+                                <c:otherwise>
+                                    ${userBook.title}
+                                </c:otherwise>
+                            </c:choose>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="${user.login}/remove/${userBook.id}">
+                            <img src="http://localhost:8080/web-resources/img/delete16.png"></img>
+                        </a>
+                    </td>
+                </tr>
+            </c:forEach>
+        </table>
+        <br/>
+        <a href="/${user.login}/bookCreation">Create Book</a>
+        <br/>
+        <a href="${securityLogout}">Logout</a>
+        <c:if test="${person eq 'admin'}">
+            <div style="float: right">
+                <br/>
+                <a href="/admin">Admin</a>
+            </div>
+        </c:if>
+    </div>
+    </sec:authorize>
+
+    <c:url value='j_spring_security_check' var="securityCheck"/>
+    <c:if test="${person eq 'guest'}">
+        <div class="well leftSidePanel">
+            <form name='login_form' action="${securityCheck}"
+                  method='POST'>
+
+                <!--<table class="table table-bordered">-->
+                    <!--<tr>-->
+                        <!--<td class="line50">-->
+                            <!--User:-->
+                        <!--</td>-->
+                        <!--<td>-->
+                            <!--<input class="line80" type='text' name='j_username' value=''/>-->
+                        <!--</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                        <!--<td class="line50">-->
+                            <!--Password:-->
+                        <!--</td>-->
+                        <!--<td>-->
+                            <!--<input class="line80" type='password' name='j_password'/>-->
+                        <!--</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                        <!--<td colspan='2'><input name="submit" type="submit" class="btn-default"-->
+                                               <!--value="Sign in"/>-->
+                        <!--</td>-->
+                    <!--</tr>-->
+                <!--</table>-->
+                <input type="text" class="form-control" id="inputEmail" placeholder="Email" name='j_username' value=''/>
+                <input type="password" class="form-control" id="inputPassword" placeholder="Password" name='j_password'/>
+                <button type="submit" class="btn btn-primary" value="Sign in">Submit</button>
+            <!--&lt;!&ndash;&lt;!&ndash;value="Sign in"/>&ndash;&gt;-->
+</form>
+<a href="/registration">Registration</a>
+</div>
+</c:if>
+
+
+
+<!--TODO:finish admin-->
+    <!--<sec:authorize access="hasRole('ROLE_ADMIN')">-->
+        <!--<div style="float: right">-->
+            <!--<a href="/admin">Admin</a>-->
+        <!--</div>-->
+    <!--</sec:authorize>-->
+
+    <!--<c:if test="${not empty flashMessage}">-->
+        <!--${flashMessage}-->
+        <!--<br/>-->
+    <!--</c:if>-->
+
+
+
+    <div class="well content">
+        <form class="bs-example form-horizontal">
+        <fieldset>
+        <!--<legend>-->
+            <div class="btn-group btn-group-justified">
+                <a href="/most_popular" class="btn btn-default">Most popular</a>
+                <a href="/recent" class="btn btn-default">Recent</a>
+            </div>
+        <!--</legend>-->
+        <c:if test="${not empty books}">
+            <table class="table table-bordered table1">
+                <tbody>
+                <c:forEach items="${books}" var="book">
+                    <tr>
+                        <td>
+                            <a href="/${book.user.login}/editBook/${book.title}/1/show">
+                                ${book.title}
+                            </a>
+                        </td>
+                        <td>
+                            ${book.user.surname}
+                        </td>
+                        <td>
+                            ${book.rating}
+                        </td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </c:if>
+        </fieldset>
+        </form>
+    </div>
+
+
+</div>
